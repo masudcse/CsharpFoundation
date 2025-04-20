@@ -23,7 +23,7 @@ namespace AsyncDemo.Services
             if (_cashe.TryGetValue(productId, out var cached))
             {
                 _logger.LogInformation("Cache HIT for product {ProductId}", productId);
-                return new ValueTask<Product>(cached);
+                return cached;
             }
 
             _logger.LogInformation("Cache MISS - Fetching from API for product {ProductId}", productId);
@@ -31,16 +31,6 @@ namespace AsyncDemo.Services
             _cashe[productId] = product;
             return product;
         }
-        //public async ValueTask<Product> GetProductAsync(int ProductId,CancellationToken cancellationToken)
-        //{
-        //    if(_cashe.TryGetValue(ProductId, out var cached))
-        //    {
-        //        _logger.LogInformation("Cache for {ProductId}", ProductId);
-        //        return new ValueTask<Product>(cached);
-        //    }
-        //    var product = await FetchFromApiAysnc(ProductId, cancellationToken);
-        //    _cashe[ProductId] = product;
-        //    return product;
-        //}
+        
     }
 }
